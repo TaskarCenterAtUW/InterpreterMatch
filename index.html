@@ -34,6 +34,7 @@
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
 
   <script>
@@ -57,20 +58,18 @@
 
   </script>
   
-  <script>
-    //var database = firebase.database();
-    
-    //var messageRef = new database('https://interpretermatch.firebaseio.com');
-    
-    var messageField = document.getElementById('messageInput');
-    
+  <script>            
     function savedata() {
+      var messageField = document.getElementById('messageInput');
+
       var message = messageField.value;
       
       console.log(message);
       
       // save data to database
-      messageRef.push({fileName:'messageField'}, text:message);
+      database.ref().set({
+        msg:message
+      })
       messageField.value = '';
     }
     
