@@ -34,6 +34,7 @@
 
   <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
 
@@ -58,21 +59,18 @@
 
   </script>
   
-  <script>            
+  <script>
+    // save data to firebase
     function savedata() {
       var messageField = document.getElementById('messageInput');
-
       var message = messageField.value;
-      
-      console.log(message);
-      
-      // save data to database
-      database.ref().set({
+            
+      database.ref('users/' + 123).set({
+        fieldName: 'messageField',
         msg:message
       })
       messageField.value = '';
     }
-    
   </script>
 
   <!-- ======= Hero Section ======= -->
@@ -94,13 +92,28 @@
                 <input type='text' id='messageInput'  placeholder='Enter your data here...'>
                 <button type="button" onclick="savedata()">Save Data</button>
                 <h2>Results</h2>
-                <textarea rows="10" cols="50" id="results"></textarea>
+                <textarea rows="10" cols="50" id="results" value=" "></textarea>
                 
                 <p class="animated fadeInUp"></p>
                 <a href="#about" class="btn-get-started animated fadeInUp scrollto">About</a>
               </div>
             </div>
           </div>
+          
+          
+          
+<script>
+    var messageResults = document.getElementById('results');
+    messageResults.value = 'message';
+
+    database.ref('users/' + 123).on("value", function(snapshot) {
+      var message = snapshot.val().msg;
+      console.log(message);
+      messageResults.value += '\n' + message;
+    });
+  
+</script>
+          
 
           <!-- Slide 2 -->
           <div class="carousel-item">
