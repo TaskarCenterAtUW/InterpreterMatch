@@ -102,17 +102,17 @@
           
           
           
-<script>
-    var messageResults = document.getElementById('results');
-    messageResults.value = 'message';
+  <script>
+      var messageResults = document.getElementById('results');
+      messageResults.value = 'message';
 
-    database.ref('users/' + 123).on("value", function(snapshot) {
-      var message = snapshot.val().msg;
-      console.log(message);
-      messageResults.value += '\n' + message;
-    });
-  
-</script>
+      database.ref('users/' + 123).on("value", function(snapshot) {
+        var message = snapshot.val().msg;
+        console.log(message);
+        messageResults.value += '\n' + message;
+      });
+
+  </script>
           
 
           <!-- Slide 2 -->
@@ -127,6 +127,8 @@
               </div>
             </div>
           </div>
+          
+
     
           <!-- Slide 3 -->
           <div class="carousel-item">
@@ -161,6 +163,42 @@
     
 
 <!-- Sign in form -->
+  <script>
+    function toggleSignIn() {
+      if (firebase.auth().currentUser) {
+        firebase.auth().signOut();
+      } else {
+        var email = document.getElementById('defaultForm-email').value;
+        var password = document.getElementById('defaultForm-pass').value;
+        
+        if (email.length < 4) {
+          alert('Please enter an email address.');
+          return;
+        }
+        if (password.length < 4) {
+          alert('Please enter a password');
+          return;
+        }
+        
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode == 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+          // TODO: when we have sign-in session, we should disable it here
+          
+        });
+        console.log('Sign in succeed.');
+      }
+    }
+    
+    
+  </script>
+  
   <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -180,13 +218,49 @@
 
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button class="btn btn-default">Login</button>
+          <button class="btn btn-default" onclick="toggleSignIn()">Login</button>
         </div>
       </div>
     </div>
   </div>
 
+  
+  
+  
 <!-- Sign up form -->
+  
+  <script>
+    function handleSignUp() {
+      var email = document.getElementById('orangeForm-email').value;
+      var password = document.getElementById('orangeForm-pass').value;
+      if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+      }
+      if (password.length < 4) {
+        alert('Please enter a password.');
+        return;
+      }
+      
+      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak. Please give a stronger password.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+      
+    }
+
+
+    
+
+  
+  </script>
     
   <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
@@ -209,7 +283,7 @@
             <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
         </div>
         <div class="modal-footer d-flex justify-content-center">
-          <button class="btn btn-deep-orange">Sign up</button>
+          <button class="btn btn-deep-orange" onclick="handleSignUp()">Sign up</button>
         </div>
       </div>
     </div>
