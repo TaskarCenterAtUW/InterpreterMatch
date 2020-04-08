@@ -186,10 +186,12 @@
         }
         
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
+          // Success
           console.log('Sign in succeed.');
           alert('You successfully signed in!')
           window.location.href = './profile.html'
         }).catch(function(error) {
+          // Error
           var errorCode = error.code;
           var errorMessage = error.message;
           if (errorCode == 'auth/wrong-password') {
@@ -249,7 +251,11 @@
         return;
       }
       
-      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(function(firebaseUser) {
+        // Success
+        window.location.href = './profile.html'
+      }).catch(function(error) {
+        // Error
         var errorCode = error.code;
         var errorMessage = error.message;
         
@@ -262,11 +268,6 @@
       });
       
     }
-
-
-    
-
-  
   </script>
     
   <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
