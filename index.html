@@ -169,6 +169,9 @@
     function toggleSignIn() {
       if (firebase.auth().currentUser) {
         firebase.auth().signOut();
+        console.log('signed out.')
+        // TODO: should be signing out if someone signs in when they're already logged in?  
+        //        maybe just disable the sign in button in that cse instead?
       } else {
         var email = document.getElementById('defaultForm-email').value;
         var password = document.getElementById('defaultForm-pass').value;
@@ -182,7 +185,11 @@
           return;
         }
         
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        firebase.auth().signInWithEmailAndPassword(email, password).then(function(firebaseUser) {
+          console.log('Sign in succeed.');
+          alert('You successfully signed in!')
+          window.location.href = './profile.html'
+        }).catch(function(error) {
           var errorCode = error.code;
           var errorMessage = error.message;
           if (errorCode == 'auth/wrong-password') {
@@ -193,7 +200,6 @@
           console.log(error);
           // TODO: when we have sign-in session, we should disable it here
         });
-        console.log('Sign in succeed.');
       }
     }
     
