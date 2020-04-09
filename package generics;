@@ -1,0 +1,23 @@
+package generics;
+
+public class Box<T> {
+    T item;
+
+    // declare generics T (a new type variable, called type parameter)
+    // This can be *any* reference type such as String
+    // T can be any kind of boxes
+    public Box(T item) {
+        this.item = item;
+    }
+
+    public Box() {
+    }
+
+    public void add(T thing) {
+        item = thing;
+    }
+
+    public void empty() {
+        item = null;
+    }
+}
