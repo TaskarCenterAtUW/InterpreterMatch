@@ -18,6 +18,44 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
+
+    <!-- don't fully re-initialize firebase (done in index.html), just do set up to use -->
+    <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyAFgrfKyJNyFs87r5mE5dPX_u22eJcbD1k",
+      authDomain: "interpretermatch.firebaseapp.com",
+      databaseURL: "https://interpretermatch.firebaseio.com",
+      projectId: "interpretermatch",
+      storageBucket: "interpretermatch.appspot.com",
+      messagingSenderId: "326479919629",
+      appId: "1:326479919629:web:d73cf91f0017bb701bf344",
+      measurementId: "G-EQCEE8DV2B"
+    };
+
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig)
+    }
+    var database = firebase.database()
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            var user = firebase.auth().currentUser
+            console.log(firebase.auth().currentUser.email)
+        } else {
+            // TODO: somehow just disallow this?
+            console.log("no user signed in")
+            alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+        }
+    });
+    </script>
+
 <div class="container">
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
@@ -133,88 +171,84 @@
                 <div class="tab-pane" id="edit">
                     <form role="form">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                            <label class="col-lg-3 col-form-label form-control-label">Name</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value="Jane">
+                                <input class="form-control" id="name-form" type="text" value="Your name here">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="Bishop">
-                            </div>
+                            <script>
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                if (user) {
+                                    if (user.displayName) { // don't put 'null' if name hasn't been input yet
+                                        document.getElementById('name-form').value = user.displayName
+                                    }
+                                } else {
+                                    // TODO: What should we put here if no user is signed in?
+                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                }
+                                });
+                            </script>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Email</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="email" value="email@gmail.com">
+                                <input class="form-control" id="email-form" type="email" value="Your email here">
                             </div>
+                            <script>
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                if (user) {
+                                    document.getElementById('email-form').value = user.email
+                                } else {
+                                    // TODO: What should we put here if no user is signed in?
+                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                }
+                                });
+                            </script>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Company</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value="">
+                                <input class="form-control" id="company-form" type="text" value="">
                             </div>
+                            <script>
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                if (user) {
+                                    database.ref('/users/' + user.email.replace(/\./g, ',')).once('value').then(function(snapshot) {
+                                        if (snapshot.val() && snapshot.val().company) {
+                                            document.getElementById('company-form').value = snapshot.val().company;
+                                        }
+                                    })
+                                } else {
+                                    // TODO: What should we put here if no user is signed in?
+                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                }
+                                });
+                            </script>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Website</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="url" value="">
+                                <input class="form-control" id="website-form" type="url" value="">
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="" placeholder="Street">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label"></label>
-                            <div class="col-lg-6">
-                                <input class="form-control" type="text" value="" placeholder="City">
-                            </div>
-                            <div class="col-lg-3">
-                                <input class="form-control" type="text" value="" placeholder="State">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                            <div class="col-lg-9">
-                                <select id="user_time_zone" class="form-control" size="0">
-                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                    <option value="Alaska">(GMT-09:00) Alaska</option>
-                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                    <option value="Arizona">(GMT-07:00) Arizona</option>
-                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="text" value="janeuser">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="password" value="11111122333">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                            <div class="col-lg-9">
-                                <input class="form-control" type="password" value="11111122333">
-                            </div>
+                            <script>
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                if (user) {
+                                    database.ref('/users/' + user.email.replace(/\./g, ',')).once('value').then(function(snapshot) {
+                                        if (snapshot.val() && snapshot.val().website) {
+                                            document.getElementById('website-form').value = snapshot.val().website;
+                                        }
+                                    })
+                                } else {
+                                    // TODO: What should we put here if no user is signed in?
+                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                }
+                                });
+                            </script>
                         </div>
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label"></label>
                             <div class="col-lg-9">
                                 <input type="reset" class="btn btn-secondary" value="Cancel">
-                                <input type="button" class="btn btn-primary" value="Save Changes">
+                                <input type="button" class="btn btn-primary" value="Save Changes" onclick="saveUserInfo()">
                             </div>
                         </div>
                     </form>
@@ -231,3 +265,46 @@
         </div>
     </div>
 </div>
+
+<script>
+    function saveUserInfo() {
+        firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            var answeredPass = prompt("Please re-enter password to save your edits")
+
+            user = firebase.auth().currentUser
+            const credential = firebase.auth.EmailAuthProvider.credential(
+                user.email,
+                answeredPass
+            )
+
+            user.reauthenticateWithCredential(credential).then(function() {
+                var name = document.getElementById('name-form').value
+                var co = document.getElementById('company-form').value
+                var web = document.getElementById('website-form').value
+
+                // update profile
+                user.updateProfile({
+                    displayName : name
+                })
+
+                database.ref('/users/' + user.email.replace(/\./g, ',')).set({
+                    name : name, 
+                    email : user.email,
+                    company : co,
+                    website : web
+                })
+            }).catch(function(error) {
+                console.log(error)
+                // TODO: let them try again?
+                // if (error == 'auth/wrong-password') {
+                //     answeredPass = prompt("Wrong password.  Please try again.")
+
+                // }
+            })
+        } else {
+            alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN')
+        }
+        });
+    }
+</script>
