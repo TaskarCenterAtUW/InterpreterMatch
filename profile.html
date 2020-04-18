@@ -253,8 +253,8 @@
                                 firebase.auth().onAuthStateChanged(function(user) {
                                 if (user) {
                                     database.ref('/users/' + user.email.replace(/\./g, ',')).once('value').then(function(snapshot) {
-                                        if (snapshot.val() && snapshot.val().website) {
-                                            document.getElementById('bio-form').value = snapshot.val().website;
+                                        if (snapshot.val() && snapshot.val().biography) {
+                                            document.getElementById('bio-form').value = snapshot.val().biography;
                                         }
                                     })
                                 } else {
