@@ -84,17 +84,35 @@
                                 Indie music, skiing and hiking. I love the great outdoors.
                             </p> -->
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" id ="badge-display-profile">
                             <h6>Current Badges</h6>
-                            <a href="#" class="badge badge-dark badge-pill">html5</a>
-                            <a href="#" class="badge badge-dark badge-pill">react</a>
-                            <a href="#" class="badge badge-dark badge-pill">codeply</a>
-                            <a href="#" class="badge badge-dark badge-pill">angularjs</a>
-                            <a href="#" class="badge badge-dark badge-pill">css3</a>
-                            <a href="#" class="badge badge-dark badge-pill">jquery</a>
-                            <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
-                            <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
-                            <hr>
+                            <script>
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                if (user) {
+                                    var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
+                                    var existingBadges = [];
+                                    userTagsRef.on('value', function(snapshot) {
+                                        snapshot.forEach(function(childSnapshot) {
+                                            var tag = childSnapshot.val();
+                                            var tagText = tag.value;
+                                            var newBadge = document.createElement("a");
+
+                                            existingBadges.push(tagText)
+
+                                            newBadge.textContent = tagText
+                                            newBadge.value = tagText
+                                            newBadge.classList = "badge badge-dark badge-pill";
+                                            newBadge.href = "#"
+
+                                            var badgeBar = document.getElementById('badge-display-profile');
+                                            badgeBar.appendChild(newBadge)
+                                        });
+                                    });
+                                } else {
+                                    // TODO: what do if someone is not logged in? 
+                                }
+                                });
+                            </script>
                         </div>
                         <div class="col-md-12">
                             <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
@@ -233,34 +251,34 @@
                             </script>
                             </ul>
                         </div>
-                        <div class="col-md-6" id="badge-display">
+                        <div class="col-md-6" id="badge-display-edit">
                             <h6>Current Badges</h6>
                             <script>
-                                var user = firebase.auth().onAuthStateChanged(function(user) {
-                                    if (user) {
-                                        var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
-                                        var existingBadges = [];
-                                        userTagsRef.on('value', function(snapshot) {
-                                            snapshot.forEach(function(childSnapshot) {
-                                                var tag = childSnapshot.val();
-                                                var tagText = tag.value;
-                                                var newBadge = document.createElement("a");
+                                firebase.auth().onAuthStateChanged(function(user) {
+                                if (user) {
+                                    var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
+                                    var existingBadges = [];
+                                    userTagsRef.on('value', function(snapshot) {
+                                        snapshot.forEach(function(childSnapshot) {
+                                            var tag = childSnapshot.val();
+                                            var tagText = tag.value;
+                                            var newBadge = document.createElement("a");
 
-                                                existingBadges.push(tagText)
+                                            existingBadges.push(tagText)
 
-                                                newBadge.textContent = tagText
-                                                newBadge.value = tagText
-                                                newBadge.classList = "badge badge-dark badge-pill";
-                                                newBadge.href = "#"
+                                            newBadge.textContent = tagText
+                                            newBadge.value = tagText
+                                            newBadge.classList = "badge badge-dark badge-pill";
+                                            newBadge.href = "#"
 
-                                                var badgeBar = document.getElementById('badge-display');
-                                                badgeBar.appendChild(newBadge)
-                                            });
+                                            var badgeBar = document.getElementById('badge-display-edit');
+                                            badgeBar.appendChild(newBadge)
                                         });
-                                    } else {
-                                        // TODO: what do if someone is not logged in? 
-                                    }
-                                });
+                                    });
+                                } else {
+                                    // TODO: what do if someone is not logged in? 
+                                }
+                            });
                             </script>
                         </div>
                         <!--/Dropdown primary-->
@@ -361,6 +379,34 @@
         // TODO: What should we put here if no user is signed in?
     }
     });
+
+    function loadStoredBadges() {
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
+                var existingBadges = [];
+                userTagsRef.on('value', function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var tag = childSnapshot.val();
+                        var tagText = tag.value;
+                        var newBadge = document.createElement("a");
+
+                        existingBadges.push(tagText)
+
+                        newBadge.textContent = tagText
+                        newBadge.value = tagText
+                        newBadge.classList = "badge badge-dark badge-pill";
+                        newBadge.href = "#"
+
+                        var badgeBar = document.getElementById('badge-display');
+                        badgeBar.appendChild(newBadge)
+                    });
+                });
+            } else {
+                // TODO: what do if someone is not logged in? 
+            }
+        });
+    }
 </script>
 
 <script>
