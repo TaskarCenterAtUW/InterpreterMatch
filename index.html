@@ -59,6 +59,15 @@
     // Get a reference to the database service
     var database = firebase.database();
 
+    // store tags in database
+    var tagsRef = database.ref('tags/')
+    var badges = ["Technology", "Health/Medical", "Mathematics/Physics", "Psychology/Sociology", "Sciences", "Engineering", "Business", "Arts", "Language", "Law/Legal", "Other"]
+    badges.forEach(function(badge) {
+      var newTagsRef = tagsRef.push();
+      newTagsRef.set({
+        value : badge
+      });
+    });
   </script>
   
   <script>

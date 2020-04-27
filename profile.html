@@ -85,7 +85,7 @@
                             </p> -->
                         </div>
                         <div class="col-md-6">
-                            <h6>Recent badges</h6>
+                            <h6>Current Badges</h6>
                             <a href="#" class="badge badge-dark badge-pill">html5</a>
                             <a href="#" class="badge badge-dark badge-pill">react</a>
                             <a href="#" class="badge badge-dark badge-pill">codeply</a>
@@ -95,9 +95,6 @@
                             <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
                             <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
                             <hr>
-                            <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
-                            <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
-                            <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
                         </div>
                         <div class="col-md-12">
                             <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
@@ -204,6 +201,69 @@
                                 });
                             </script>
                         </div>
+                        <!--Dropdown primary-->
+                        <div class="dropdown">
+                            <!--Trigger-->
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1-1"
+                            data-toggle="dropdown">Add your tags here</button>
+                        
+                            <!--Menu-->
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" id="tag-dropdown">
+                            <!-- <input class="form-control" type="text" placeholder="Search" aria-label="Search"> -->
+                            <script>
+                            // pull tags from database
+                            var tagsRef = database.ref('tags/')
+                            menu = document.getElementById("tag-dropdown")
+                            
+                            tagsRef.on('value', function(snapshot) {
+                                snapshot.forEach(function(childSnapshot) {
+                                    var tag = childSnapshot.val()
+                                    var tagText = tag.value
+                                    console.log(tagText)
+                                    console.log("adding badges to dropdown..." + tagText)
+                                    var el = document.createElement("li");
+                                    el.textContent = tagText;
+                                    el.value = tagText;
+                                    el.addEventListener("click", function(text) {
+                                        updateBadges($(this).text())
+                                    })
+                                    menu.appendChild(el);
+                                });
+                            });
+                            </script>
+                            </ul>
+                        </div>
+                        <div class="col-md-6" id="badge-display">
+                            <h6>Current Badges</h6>
+                            <script>
+                                var user = firebase.auth().onAuthStateChanged(function(user) {
+                                    if (user) {
+                                        var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
+                                        var existingBadges = [];
+                                        userTagsRef.on('value', function(snapshot) {
+                                            snapshot.forEach(function(childSnapshot) {
+                                                var tag = childSnapshot.val();
+                                                var tagText = tag.value;
+                                                var newBadge = document.createElement("a");
+
+                                                existingBadges.push(tagText)
+
+                                                newBadge.textContent = tagText
+                                                newBadge.value = tagText
+                                                newBadge.classList = "badge badge-dark badge-pill";
+                                                newBadge.href = "#"
+
+                                                var badgeBar = document.getElementById('badge-display');
+                                                badgeBar.appendChild(newBadge)
+                                            });
+                                        });
+                                    } else {
+                                        // TODO: what do if someone is not logged in? 
+                                    }
+                                });
+                            </script>
+                        </div>
+                        <!--/Dropdown primary-->
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Company</label>
                             <div class="col-lg-9">
@@ -294,7 +354,7 @@
             if (snapshot.val() && snapshot.val().biography) {
                 var bioBody = document.getElementById('bio-blurb')
                 // TODO: better way to do this??
-                var list = document.getElementsByTagName("p")[0].innerHTML=snapshot.val().biography;
+                document.getElementsByTagName("p")[0].innerHTML=snapshot.val().biography;
             }
         })
     } else {
@@ -309,7 +369,6 @@
         if (user) {
             var answeredPass = prompt("Please re-enter password to save your edits")
 
-            user = firebase.auth().currentUser
             const credential = firebase.auth.EmailAuthProvider.credential(
                 user.email,
                 answeredPass
@@ -326,13 +385,38 @@
                     displayName : name
                 })
 
-                database.ref('/users/' + user.email.replace(/\./g, ',')).set({
+                var emailKey = user.email.replace(/\./g, ',');
+                var userRef = database.ref('/users/' + emailKey);
+
+                userRef.set({
                     name : name, 
                     email : user.email,
                     company : co,
                     website : web,
                     biography : bio
                 })
+
+                var userTagRef = database.ref('/users/' + emailKey + '/tags/');
+                var currBadges = [];
+                userTagRef.once('value', function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var tagText = childSnapshot.val().value
+                        currBadges.push(tagText);
+                        console.log(tagText + " a current badge")
+                    });
+                });
+
+                // TODO: figure out deleting badges
+                // maybe helpful for that: https://stackoverflow.com/questions/49881809/how-to-delete-item-from-firebase-list
+                
+                newBadges.forEach(function(tagText) {
+                    if (!currBadges.includes(tagText)) {
+                        var newTagRef = userTagRef.push()
+                        newTagRef.set({
+                            value : tagText
+                        });
+                    }
+                });
             }).catch(function(error) {
                 console.log(error)
                 // TODO: let them try again?
@@ -344,6 +428,37 @@
         } else {
             alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN')
         }
+        });
+    }
+
+    newBadges = new Set()
+    function updateBadges(badgeText) {
+        var user = firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var existingBadges = new Set();
+                var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
+                userTagsRef.on('value', function(snapshot) {
+                    snapshot.forEach(function(childSnapshot) {
+                        var tagText = childSnapshot.val().value;
+                        existingBadges.add(tagText)
+                    });
+                });    
+                newBadges.add(badgeText)
+                if (!existingBadges.has(badgeText)) {
+                    var newBadge = document.createElement("a");
+                    newBadge.textContent = badgeText;
+                    newBadge.value = badgeText;
+                    newBadge.classList = "badge badge-dark badge-pill";
+                    newBadge.href = "#"
+
+                    var badgeBar = document.getElementById('badge-display');
+                    badgeBar.appendChild(newBadge)
+                }
+
+                console.log(newBadges)
+            } else {
+                // TODO: MERP not logged in ackkkk 
+            }
         });
     }
 </script>
