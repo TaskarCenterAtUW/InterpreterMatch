@@ -235,17 +235,17 @@
                             
                             tagsRef.on('value', function(snapshot) {
                                 snapshot.forEach(function(childSnapshot) {
-                                    var tag = childSnapshot.val()
-                                    var tagText = tag.value
-                                    console.log(tagText)
-                                    console.log("adding badges to dropdown..." + tagText)
-                                    var el = document.createElement("li");
-                                    el.textContent = tagText;
-                                    el.value = tagText;
-                                    el.addEventListener("click", function(text) {
-                                        updateBadges($(this).text())
-                                    })
-                                    menu.appendChild(el);
+                                    childSnapshot.forEach(function(option) {
+                                        var tag = option.val();
+                                        console.log("adding badges to dropdown..." + tag)
+                                        var el = document.createElement("li");
+                                        el.textContent = tag;
+                                        el.value = tag;
+                                        el.addEventListener("click", function(text) {
+                                            updateBadges($(this).text())
+                                        })
+                                        menu.appendChild(el);
+                                    });
                                 });
                             });
                             </script>
@@ -258,7 +258,7 @@
                                 if (user) {
                                     var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
                                     var existingBadges = [];
-                                    userTagsRef.on('value', function(snapshot) {
+                                    userTagsRef.once('value', function(snapshot) {
                                         snapshot.forEach(function(childSnapshot) {
                                             var tag = childSnapshot.val();
                                             var tagText = tag.value;
@@ -380,7 +380,7 @@
     }
     });
 
-    function loadStoredBadges() {
+    function loadStoredBadges(whichID) {
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
                 var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
@@ -398,7 +398,7 @@
                         newBadge.classList = "badge badge-dark badge-pill";
                         newBadge.href = "#"
 
-                        var badgeBar = document.getElementById('badge-display');
+                        var badgeBar = document.getElementById(whichID);
                         badgeBar.appendChild(newBadge)
                     });
                 });
@@ -434,13 +434,14 @@
                 var emailKey = user.email.replace(/\./g, ',');
                 var userRef = database.ref('/users/' + emailKey);
 
-                userRef.set({
-                    name : name, 
-                    email : user.email,
-                    company : co,
-                    website : web,
-                    biography : bio
-                })
+                // update user info 
+                userRef.update({
+                    'name' : name, 
+                    'email': user.email,
+                    'company' : co,
+                    'website' : web,
+                    'biography' : bio
+                });
 
                 var userTagRef = database.ref('/users/' + emailKey + '/tags/');
                 var currBadges = [];
@@ -451,9 +452,6 @@
                         console.log(tagText + " a current badge")
                     });
                 });
-
-                // TODO: figure out deleting badges
-                // maybe helpful for that: https://stackoverflow.com/questions/49881809/how-to-delete-item-from-firebase-list
                 
                 newBadges.forEach(function(tagText) {
                     if (!currBadges.includes(tagText)) {
@@ -463,6 +461,9 @@
                         });
                     }
                 });
+
+                // TODO: figure out deleting badges
+                // maybe helpful for that: https://stackoverflow.com/questions/49881809/how-to-delete-item-from-firebase-list
             }).catch(function(error) {
                 console.log(error)
                 // TODO: let them try again?
@@ -483,7 +484,7 @@
             if (user) {
                 var existingBadges = new Set();
                 var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
-                userTagsRef.on('value', function(snapshot) {
+                userTagsRef.once('value', function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
                         var tagText = childSnapshot.val().value;
                         existingBadges.add(tagText)
@@ -497,11 +498,9 @@
                     newBadge.classList = "badge badge-dark badge-pill";
                     newBadge.href = "#"
 
-                    var badgeBar = document.getElementById('badge-display');
+                    var badgeBar = document.getElementById('badge-display-edit');
                     badgeBar.appendChild(newBadge)
                 }
-
-                console.log(newBadges)
             } else {
                 // TODO: MERP not logged in ackkkk 
             }
