@@ -91,7 +91,7 @@
                                 if (user) {
                                     var userTagsRef = database.ref('/users/' + user.email.replace(/\./g, ',') + '/tags/');
                                     var existingBadges = [];
-                                    userTagsRef.on('value', function(snapshot) {
+                                    userTagsRef.once('value', function(snapshot) {
                                         snapshot.forEach(function(childSnapshot) {
                                             var tag = childSnapshot.val();
                                             var tagText = tag.value;
@@ -226,27 +226,47 @@
                             data-toggle="dropdown">Add your tags here</button>
                         
                             <!--Menu-->
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" id="tag-dropdown">
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="tag-dropdown">
                             <!-- <input class="form-control" type="text" placeholder="Search" aria-label="Search"> -->
                             <script>
                             // pull tags from database
                             var tagsRef = database.ref('tags/')
                             menu = document.getElementById("tag-dropdown")
                             
-                            tagsRef.on('value', function(snapshot) {
+                            tagsRef.on('child_added', function(snapshot) {
+                                console.log("category: " + snapshot.key);
+                                var category = snapshot.key;
+                                var categoryID = "ul-" + category;
+
+                                categoryLI = document.createElement("li");
+                                categoryLI.id = categoryID;
+                                categoryLI.class = 'dropdown-submenu'
+
+                                listText = document.createElement("a");
+                                listText.tabIndex = -1;
+                                listText.href = "#";
+                                listText.textContent = category;
+                                listText.value = category;
+                                categoryLI.appendChild(listText)
+
+                                sublist = document.createElement("ul");
+                                sublist.class = "dropdown-menu";
+                                categoryLI.appendChild(sublist);
+
                                 snapshot.forEach(function(childSnapshot) {
-                                    childSnapshot.forEach(function(option) {
-                                        var tag = option.val();
-                                        console.log("adding badges to dropdown..." + tag)
-                                        var el = document.createElement("li");
-                                        el.textContent = tag;
-                                        el.value = tag;
-                                        el.addEventListener("click", function(text) {
-                                            updateBadges($(this).text())
-                                        })
-                                        menu.appendChild(el);
-                                    });
+                                    console.log("child snapshot: " + childSnapshot.val());
+                                    var tag = childSnapshot.val();
+                                    console.log("adding badges to dropdown..." + tag)
+                                    var el = document.createElement("li");
+                                    el.textContent = tag;
+                                    el.value = tag;
+                                    el.tabIndex = -1;
+                                    el.addEventListener("click", function(text) {
+                                        updateBadges($(this).text())
+                                    })
+                                    sublist.appendChild(el);
                                 });
+                                menu.appendChild(categoryLI);
                             });
                             </script>
                             </ul>
