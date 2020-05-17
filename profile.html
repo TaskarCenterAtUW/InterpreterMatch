@@ -114,7 +114,7 @@
                                 });
                             </script>
                         </div>
-                        <div class="col-md-12">
+                        <!-- <div class="col-md-12">
                             <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
                             <table class="table table-sm table-hover table-striped">
                                 <tbody>                                    
@@ -145,7 +145,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                     </div>
                     <!--/row-->
                 </div>
@@ -262,8 +262,8 @@
                                     el.value = tag;
                                     el.tabIndex = -1;
                                     el.addEventListener("click", function(text) {
-                                        updateBadges($(this).text())
-                                    })
+                                        updateBadges($(this).text());
+                                    });
                                     sublist.appendChild(el);
                                 });
                                 menu.appendChild(categoryLI);
@@ -284,12 +284,16 @@
                                             var tagText = tag.value;
                                             var newBadge = document.createElement("a");
 
-                                            existingBadges.push(tagText)
+                                            existingBadges.push(tagText);
 
-                                            newBadge.textContent = tagText
-                                            newBadge.value = tagText
+                                            newBadge.textContent = tagText;
+                                            newBadge.value = tagText;
                                             newBadge.classList = "badge badge-dark badge-pill";
-                                            newBadge.href = "#"
+                                            newBadge.href = "#";
+                                            newBadge.id = "__" + tagText;
+                                            newBadge.addEventListener("click", function() {
+                                                deleteBadge($(this).text());
+                                            });
 
                                             var badgeBar = document.getElementById('badge-display-edit');
                                             badgeBar.appendChild(newBadge)
@@ -464,22 +468,34 @@
                 });
 
                 var userTagRef = database.ref('/users/' + emailKey + '/tags/');
-                var currBadges = [];
+
+                // reverse mapping with tagText as key and randomly-generated key from db as value
+                var currBadges = new Map();
                 userTagRef.once('value', function(snapshot) {
                     snapshot.forEach(function(childSnapshot) {
+                        var tagKey = childSnapshot.key;
                         var tagText = childSnapshot.val().value
-                        currBadges.push(tagText);
-                        console.log(tagText + " a current badge")
+                        currBadges.set(tagText, tagKey);
                     });
                 });
+                console.log("current badges: ", currBadges);
                 
                 newBadges.forEach(function(tagText) {
-                    if (!currBadges.includes(tagText)) {
+                    if (!currBadges.has(tagText)) {
                         var newTagRef = userTagRef.push()
                         newTagRef.set({
                             value : tagText
                         });
                     }
+                });
+
+                deletedBadges.forEach(function(tagText) {
+                    const tagKey = currBadges.get(tagText);
+                    console.log("-=-=-= " + tagKey);
+                    var path = '/users/' + emailKey + '/tags/' + tagKey + '/';
+                    console.log("using this path to delete tag " + tagText + ": " + path);
+                    var ref = database.ref(path);
+                    ref.remove();
                 });
 
                 // TODO: figure out deleting badges
@@ -525,5 +541,13 @@
                 // TODO: MERP not logged in ackkkk 
             }
         });
+    }
+
+    deletedBadges = new Set()
+    function deleteBadge(badgeText) {
+        deletedBadges.add(badgeText);
+        const badgeID = "__" + badgeText;
+        var elt = document.getElementById(badgeID);
+        elt.remove();
     }
 </script>
