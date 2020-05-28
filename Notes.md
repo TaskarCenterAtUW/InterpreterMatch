@@ -20,7 +20,7 @@
 * Gather the technologies you plan to use to implement the project successfully.  Think carefully about the experience each team member has with the technologies, and the ease their use, and the timeline you are constrained by.  
 * Brainstorm different challenges you may encounter, whether it is the prospect of reimbursing your interviewees, technicalities around gathering personal data in interviews or surveys, scheduling constraints, etc.  
 * Confer with partners and be able to clearly state the goal of the app.  
-* After each weekly meeting, walk away with clear action items for each member of the team so everyone is on the ame page and all have the correct expectations. 
+* After each weekly meeting, walk away with clear action items for each member of the team so everyone is on the same page and all have the correct expectations. 
 * Complete Needs Assessment assignment
     * Plan interview question beforehand carefully
         * Think carefully about how you phrase questions - try to do so in a neutral way, rather than placing judgment on alternate solutions to your project. (i.e., "How do you find the process of ___?" rather than "How much do you feel like you struggle in doing __")
@@ -29,13 +29,13 @@
     * Break down the entire app into subtasks for easier digestion
     * Envision scenarios of users actually navigating through the app to segment the app into individual pieces in need of storyboarding.  
     * Consider collecting data through surveys and interviews to inform the design of your project. 
-        * Be thoughtful about the demographics of the participants in the survey.  They should be a good representation of the overall audience you are trying to serve (if you are trying to serve the Deaf/Hard-of-Hearing population, make sure you don't just limit yourself to a particular region -- try to get a good mix). 
+        * Be thoughtful about the demographics of the participants in the survey.  They should be a good representation of the overall audience you are trying to serve (regional distribution, educational background, professions, age, gender, etc-- try to get a good mix). 
         * Think carefully about what sorts of demographic questions are necessary and appropriate for inclusion in the survey. 
-        * Also consider the accessibility of the interviews themselves, and how best to accommodate the participants to make the interview comfortable for them. 
+        * Consider the accessibility of the interviews themselves, and how best to accommodate the participants to make the interview comfortable for them. 
 * Design Document: 
-    * Technologies to be used
-    * General tasks with description of how to approach (links to tutorials you plan to use, why you think these components will work together well, etc.)
-    * General timeline for each task and the order in which you will do them (dependency matrix of what tasks need to be completed before what other tasks, etc.).  
+    * List echnologies to be used
+    * Include general tasks with description of how to approach (links to tutorials you plan to use, why you think these components will work together well, etc.)
+    * Icnlude general timeline for each task and the order in which you will do them (dependency matrix of what tasks need to be completed before what other tasks, etc.).  
     * Other things to consider (perhaps that you foresee you may run into, but are not yet sure or need to still work out).  
 * Consider the more specific research questions you are trying to answer with your project. 
 * Funding: 
@@ -44,7 +44,8 @@
     * Complete applications for funding as required. 
 * IRB:
     * Consider types of CITI training needed -- include in IRB to get approval of which trainings are necessary before actually completing them in case they are incorrect.  
-    * Work with PI to come up with appropriate consent documents for different types of interaction with subjects (this is a big focus in filling out the IRB so they need to be prepared carefully beforehand).  
+    * Work with PI to come up with appropriate consent documents for different types of interaction with subjects (this is a big focus in filling out the IRB so they need to be prepared carefully beforehand unless the study is exempt).
+    * When in doubt, contact the IRB office with questions and they can guide you along the right path (e.g., is my study heading towards exemption, review, or full board review?)
 * Set up GitHub repo (with appropriate permissions and associations with )
 
 ## Second Phase: Development and Implementation
