@@ -33,7 +33,7 @@
         * Think carefully about what sorts of demographic questions are necessary and appropriate for inclusion in the survey. 
         * Consider the accessibility of the interviews themselves, and how best to accommodate the participants to make the interview comfortable for them. 
 * Design Document: 
-    * List echnologies to be used
+    * List technologies to be used
     * Include general tasks with description of how to approach (links to tutorials you plan to use, why you think these components will work together well, etc.)
     * Icnlude general timeline for each task and the order in which you will do them (dependency matrix of what tasks need to be completed before what other tasks, etc.).  
     * Other things to consider (perhaps that you foresee you may run into, but are not yet sure or need to still work out).  
@@ -45,8 +45,10 @@
 * IRB:
     * Consider types of CITI training needed -- include in IRB to get approval of which trainings are necessary before actually completing them in case they are incorrect.  
     * Work with PI to come up with appropriate consent documents for different types of interaction with subjects (this is a big focus in filling out the IRB so they need to be prepared carefully beforehand unless the study is exempt).
-    * When in doubt, contact the IRB office with questions and they can guide you along the right path (e.g., is my study heading towards exemption, review, or full board review?)
-* Set up GitHub repo (with appropriate permissions and associations with )
+    * When in doubt, contact the IRB office with questions and they can guide you along the right path (e.g., is my study heading towards exemption, review, or full board review?).  
+    * Consider whether any parts of the overall study are IRB exempt, so those parts of the study can be acted upon earlier.  
+* Set up GitHub repo (with appropriate permissions and associations with the correct organizations).
+* Create a mailman list or email dedicated to the research group/project. 
 
 ## Second Phase: Development and Implementation
 * We chose to use: GitHub pages, Firebase, Bootstrap
@@ -58,7 +60,34 @@
     * Create a project and give it an appropriate name
     * On the next page, choose to "Add Firebase to your web app"
     * You will be provided with some code to include in your html pages, and where to put it.  
+        * [Here](https://firebase.google.com/docs/web/setup) is another great resource.  In particular pay attention to Step 3: Add Firebase SDKs and initialize Firebase.  We used the "From the CDN" option, in which case you need to include the specific Firebase products you want to use (Analytics, Authentication, etc.).  
     * Edit security permissions in Firebase by navigating to "Database" and then "Rules" and publish to save your changes.  
-    * ...
+* Bootstrap Template
+    * Find a Bootstrap template online that fits what you want for your web app and adjust to your app's specifications (listing your app's name, description, etc.). 
+* Authentication
+    * Include Firebase authentication tool (as in Step 3: Add Firebase SDKs and initialize Firebase listed above). 
+    * Sign up:
+        * Make form for getting email and password for sign up.  
+        * Use `createUserWithEmailAndPassword` to create a new user account with the password the user provided. 
+            * Note that Firebase hashes account passwords before storing (read more [here](https://firebaseopensource.com/projects/firebase/scrypt/)). 
+        * Appropriately handle errors. 
+    * Sign in:
+        * Make form for getting email and password for sign in
+        * Use `signInWithEmailAndPassword` to check the provided password against the account associated with the provided email.  
+        * Upon successful sign in, redirect to desired page (such as profile).  
+        * Appropriately handle errors. 
+* Profile 
+    * Find appropriate bootstrap template that will fit your needs.  
+    * Include Firebase database tooling (as in Step 3: Add Firebase SDKs and initialize Firebase listed above). 
+    * Make an "Edit Profile page" and on save, update database through Firebas API, with appropriate fields for saving user information.   
+* Badges
+    * Make a JSON file with badge values and their hierarchy, upload to Firebase Realtime Database. 
+    * Populate a dropdown of badges on the "Edit Profile" page. 
+        * Including hierachy -- add submenus!  
+    * Create a structure for saving badges to each profile. 
+    * Display a Bootstrap pill for each badge saved to a user's profile. 
+    * Also allow users to remove badges! 
+* Search
+    * Sophie add here! :) 
 
 ## Third Phase: Testing & Interviews
