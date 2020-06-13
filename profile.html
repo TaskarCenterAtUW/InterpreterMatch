@@ -56,7 +56,12 @@
     });
     </script>
 
-<div class="container">
+<div class="container">        
+    <div class="text-right">
+        <button class='btn btn-primary pull-right' onclick="logout()">
+            Logout
+        </button>
+    </div>
     <div class="row my-2">
         <div class="col-lg-8 order-lg-2">
             <ul class="nav nav-tabs">
@@ -549,5 +554,16 @@
         const badgeID = "__" + badgeText;
         var elt = document.getElementById(badgeID);
         elt.remove();
+    }
+
+    function logout() {
+        if (firebase.auth().currentUser) {
+            window.location.href = './index.html';
+            firebase.auth().signOut();
+            alert("You've been successfully logged out!");
+            console.log('signed out.');
+        } else {
+            alert("You must log in first!");
+        }
     }
 </script>

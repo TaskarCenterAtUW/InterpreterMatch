@@ -167,10 +167,8 @@
   <script>
     function toggleSignIn() {
       if (firebase.auth().currentUser) {
-        firebase.auth().signOut();
-        console.log('signed out.')
-        // TODO: should be signing out if someone signs in when they're already logged in?  
-        //        maybe just disable the sign in button in that cse instead?
+        alert("You're already logged in!");
+        window.location.href = './profile.html';
       } else {
         var email = document.getElementById('defaultForm-email').value;
         var password = document.getElementById('defaultForm-pass').value;
