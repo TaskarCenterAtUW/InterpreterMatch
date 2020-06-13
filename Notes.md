@@ -35,7 +35,7 @@
 * Design Document: 
     * List technologies to be used
     * Include general tasks with description of how to approach (links to tutorials you plan to use, why you think these components will work together well, etc.)
-    * Icnlude general timeline for each task and the order in which you will do them (dependency matrix of what tasks need to be completed before what other tasks, etc.).  
+    * Include general timeline for each task and the order in which you will do them (dependency matrix of what tasks need to be completed before what other tasks, etc.).  
     * Other things to consider (perhaps that you foresee you may run into, but are not yet sure or need to still work out).  
 * Consider the more specific research questions you are trying to answer with your project. 
 * Funding: 
