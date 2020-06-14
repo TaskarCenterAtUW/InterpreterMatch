@@ -85,16 +85,16 @@
 
           <!-- Slide 1 -->
           <div class="carousel-item active">
-            <div class="carousel-background"><img src="assets/img/slide/slide-1.jpg" alt=""></div>
+            <!-- <div class="carousel-background"><img src="assets/img/slide/slide-1.jpg" alt=""></div> -->
             <div class="carousel-container">
               <div class="carousel-content">
                 <h2 class="animated fadeInDown">Welcome to <span>Interpreter Match</span></h2>
                 
-                <input type='text' id='messageInput'  placeholder='Enter your data here...'>
+                <!-- <input type='text' id='messageInput'  placeholder='Enter your data here...'>
                 <button type="button" onclick="savedata()">Save Data</button>
                 <h2>Results</h2>
                 <textarea rows="10" cols="50" id="results" value=" "></textarea>
-                
+                 -->
                 <p class="animated fadeInUp"></p>
                 <a href="#about" class="btn-get-started animated fadeInUp scrollto">About</a>
               </div>
@@ -103,7 +103,7 @@
           
           
           
-  <script>
+  <!-- <script>
       var messageResults = document.getElementById('results');
       messageResults.value = 'message';
 
@@ -113,31 +113,31 @@
         messageResults.value += '\n' + message;
       });
 
-  </script>
+  </script> -->
           
 
           <!-- Slide 2 -->
           <div class="carousel-item">
-            <div class="carousel-background"><img src="assets/img/slide/slide-2.jpg" alt=""></div>
+            <!-- <div class="carousel-background"><img src="assets/img/slide/slide-2.jpg" alt=""></div> -->
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animated fadeInDown">Find your terps with us</h2>
-                <p class="animated fadeInUp">Struggling with finding terps? we got you :)</p>
-                <a href="" class="btn-get-started animated fadeInUp scrollto" data-toggle="modal" data-target="#modalLoginForm">Sign in</a>
-                <a href="" class="btn-get-started animated fadeInUp scrollto" data-toggle="modal" data-target="#modalRegisterForm">Sign up</a>
+                <h2 class="animated fadeInDown">Find Your Interpreters With Us</h2>
+                <p class="animated fadeInUp">Are you struggling to find interpreters who fit your needs?</p>
+                <p class="animated fadeInUp">Do you need interpreters with specialty knowledge or experience?</p>
+                <p class="animated fadeInUp">We'd like to help.</p>
+                <!-- <a href="" class="btn-get-started animated fadeInUp scrollto" data-toggle="modal" data-target="#modalLoginForm">Sign in</a>
+                <a href="" class="btn-get-started animated fadeInUp scrollto" data-toggle="modal" data-target="#modalRegisterForm">Sign up</a> -->
               </div>
             </div>
           </div>
-          
-
     
           <!-- Slide 3 -->
           <div class="carousel-item">
-            <div class="carousel-background"><img src="assets/img/slide/slide-3.jpg" alt=""></div>
+            <!-- <div class="carousel-background"><img src="assets/img/slide/slide-3.jpg" alt=""></div> -->
             <div class="carousel-container">
               <div class="carousel-content">
-                <h2 class="animated fadeInDown">Register today</h2>
-                <p class="animated fadeInUp">Register now to find terps/match Deaf clients.</p>
+                <h2 class="animated fadeInDown">Sign up or sign in to begin finding interpreters to match your needs.</h2>
+                <p class="animated fadeInUp">Sign up or sign in to find jobs who will be a good match for your interpreting skills.</p>
                 <a href="" class="btn-get-started animated fadeInUp scrollto" data-toggle="modal" data-target="#modalLoginForm">Sign in</a>
                 <a href="" class="btn-get-started animated fadeInUp scrollto" data-toggle="modal" data-target="#modalRegisterForm">Sign up</a>
               </div>
@@ -176,8 +176,7 @@
         if (email.length < 4) {
           alert('Please enter an email address.');
           return;
-        }
-        if (password.length < 4) {
+        } else if (password.length < 4) {
           alert('Please enter a password');
           return;
         }
@@ -312,12 +311,12 @@
         <ul>
           <li class="active"><a href="#header">Home</a></li>
           <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
+          <!-- <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li> -->
           <li><a href="#team">Team</a></li>
           <li class="drop-down"><a href="">Drop Down</a>
             <ul>
-              <li><a href="#">Drop Down 1</a></li>
+              <!-- <li><a href="#">Drop Down 1</a></li>
               <li class="drop-down"><a href="#">Drop Down 2</a>
                 <ul>
                   <li><a href="#">Deep Drop Down 1</a></li>
@@ -329,7 +328,7 @@
               </li>
               <li><a href="#">Drop Down 3</a></li>
               <li><a href="#">Drop Down 4</a></li>
-              <li><a href="#">Drop Down 5</a></li>
+              <li><a href="#">Drop Down 5</a></li> -->
             </ul>
           </li>
           <li><a href="#contact">Contact Us</a></li>
@@ -348,23 +347,30 @@
 
         <div class="section-title">
           <h2>About Us</h2>
-          <p>TerpMatch is an app that helps you find terps...</p>
+          <p>We are a group of researchers at the University or Washington interested in serving the Deaf Community as well as understanding their needs. With this project, we would like to better understand 1) the factors that are important when choosing an interpreter 2) how communities affect choosing interpreters.
+          </p>
+          <p>Because of this, we will be looking at the data but only in a de-identified form. We will not look at your email address, name (can we say gender, age?). We are mostly looking at filter preferences.
+          </p>
+          <p>We may also make interface changes and release them to different populations to perform A/B testing.
+          </p>
+          <p>While we hope to keep this project running, we cannot guarantee that it continue to exist in the future.  This is a beta-release of the project, as it is for a limited-time course, and as such the availability of the contributors will be limited following the conclusion of the course.  
+          </p>
         </div>
 
-        <div class="row">
-          <div class="col-lg-6">
+        <!-- <div class="row"> -->
+          <!-- <div class="col-lg-6">
             <img src="assets/img/about.jpg" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0 content">
+          </div> -->
+          <!-- <div class="col-lg-6 pt-4 pt-lg-0 content">
             <h3>Blah <strong>Blah</strong></h3>
             <p class="font-italic">
               Blah
             </p>
             <p>
               placeholder
-            </p>
+            </p> -->
 
-            <div class="skills-content">
+            <!-- <div class="skills-content">
 
               <div class="progress">
                 <span class="skill">Seattle <i class="val">100%</i></span>
@@ -396,14 +402,14 @@
 
             </div>
 
-          </div>
-        </div>
+          </div> -->
+        <!-- </div> -->
 
       </div>
     </section><!-- End About Us Section -->
 
     <!-- ======= Counts Section ======= -->
-    <section class="counts section-bg">
+    <!-- <section class="counts section-bg">
       <div class="container">
 
         <div class="row no-gutters">
@@ -447,7 +453,8 @@
         </div>
 
       </div>
-    </section><!-- End Counts Section -->
+    </section> -->
+    <!-- End Counts Section -->
 
     <!-- ======= Our Services Section ======= -->
     <section id="services" class="services">
@@ -455,26 +462,26 @@
 
         <div class="section-title">
           <h2>Our Services</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
         </div>
 
         <div class="row">
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box">
-              <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+              <div class="icon"><i class="bx bx-list-ul"></i></div>
+              <h4 class="title"><a href="">A Catalogue of Professional Interpreters</a></h4>
+              <p class="description">Peruse a catalogue of professional interpreters with their qualifications, certifications, and specialties.</p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box">
-              <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <div class="icon"><i class="bx bx-search"></i></div>
+              <h4 class="title"><a href="./search.html">Search</a></h4>
+              <p class="description">Search our lsit of registered interpreters to find someone who fits your needs. </p>
             </div>
           </div>
-
+<!-- 
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
@@ -491,13 +498,14 @@
             </div>
           </div>
 
-        </div>
+        </div> -->
 
       </div>
-    </section><!-- End Our Services Section -->
+    </section>
+    <!-- End Our Services Section -->
 
     <!-- ======= Cta Section ======= -->
-    <section class="cta">
+    <!-- <section class="cta">
       <div class="container">
 
         <div class="text-center">
@@ -507,10 +515,11 @@
         </div>
 
       </div>
-    </section><!-- End Cta Section -->
+    </section> -->
+    <!-- End Cta Section -->
 
     <!-- ======= More Services Section ======= -->
-    <section class="more-services section-bg">
+    <!-- <section class="more-services section-bg">
       <div class="container">
 
         <div class="row">
@@ -547,10 +556,11 @@
         </div>
 
       </div>
-    </section><!-- End More Services Section -->
+    </section> -->
+    <!-- End More Services Section -->
 
     <!-- ======= Info Box Section ======= -->
-    <section class="info-box py-0">
+    <!-- <section class="info-box py-0">
       <div class="container-fluid">
 
         <div class="row">
@@ -602,10 +612,11 @@
         </div>
 
       </div>
-    </section><!-- End Info Box Section -->
+    </section> -->
+    <!-- End Info Box Section -->
 
     <!-- ======= Our Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio section-bg">
+    <!-- <section id="portfolio" class="portfolio section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -755,10 +766,11 @@
         </div>
 
       </div>
-    </section><!-- End Our Portfolio Section -->
+    </section> -->
+    <!-- End Our Portfolio Section -->
 
     <!-- ======= Our Team Section ======= -->
-    <section id="team" class="team">
+    <!-- <section id="team" class="team">
       <div class="container">
 
         <div class="section-title">
@@ -843,7 +855,8 @@
         </div>
 
       </div>
-    </section><!-- End Our Team Section -->
+    </section> -->
+    <!-- End Our Team Section -->
 
     <!-- ======= Contact Us Section ======= -->
     <section id="contact" class="contact section-bg">
@@ -851,7 +864,7 @@
       <div class="container">
         <div class="section-title">
           <h2>Contact Us</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          <p>If you have any questions about data collection or technical issues, feel free to reach out to us at: <br><b>interpreter-matching@cs.washington.edu</b></p>
         </div>
       </div>
 
@@ -861,33 +874,17 @@
 
           <div class="col-lg-6 d-flex align-items-stretch infos">
 
-            <div class="row">
-
-              <div class="col-lg-6 info d-flex flex-column align-items-stretch">
-                <i class="bx bx-map"></i>
-                <h4>Address</h4>
-                <p>A108 Adam Street,<br>New York, NY 535022</p>
-              </div>
-              <div class="col-lg-6 info info-bg d-flex flex-column align-items-stretch">
-                <i class="bx bx-phone"></i>
-                <h4>Call Us</h4>
-                <p>+1 5589 55488 55<br>+1 5589 22548 64</p>
-              </div>
+            <!-- <div class="row">
               <div class="col-lg-6 info info-bg d-flex flex-column align-items-stretch">
                 <i class="bx bx-envelope"></i>
                 <h4>Email Us</h4>
-                <p>contact@example.com<br>info@example.com</p>
-              </div>
-              <div class="col-lg-6 info d-flex flex-column align-items-stretch">
-                <i class="bx bx-time-five"></i>
-                <h4>Working Hours</h4>
-                <p>Mon - Fri: 9AM to 5PM<br>Sunday: 9AM to 1PM</p>
+                <p>interpreter-matching@cs.washington.edu</p>
               </div>
             </div>
 
-          </div>
+          </div> -->
 
-          <div class="col-lg-6 d-flex align-items-stretch contact-form-wrap">
+          <!-- <div class="col-lg-6 d-flex align-items-stretch contact-form-wrap">
             <form action="forms/contact.php" method="post" role="form" class="php-email-form">
               <div class="form-row">
                 <div class="col-md-6 form-group">
@@ -920,7 +917,7 @@
             </form>
           </div>
 
-        </div>
+        </div> -->
 
       </div>
     </section><!-- End Contact Us Section -->
@@ -928,7 +925,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  <footer id="footer">
+  <!-- <footer id="footer">
     <div class="footer-top">
       <div class="container">
         <div class="row">
@@ -991,7 +988,8 @@
       </div>
 
     </div>
-  </footer><!-- End Footer -->
+  </footer> -->
+  <!-- End Footer -->
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
