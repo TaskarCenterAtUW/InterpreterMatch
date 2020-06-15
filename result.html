@@ -6,21 +6,81 @@
     <meta name="author" content="colorlib.com">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,600,700" rel="stylesheet" />
     <link href="assets/css/main.css" rel="stylesheet" />
-    
-    <!-- search engine -->
-    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
   </head>
   <body>
     <div class="s009">
-      <textarea rows="10" cols="50" id="results" value=" "></textarea>
-          
-          
-          
-    </div>
-    <script src="js/extention/choices.js"></script>
-    <script>
+      <input type='text' id='searchInput'  placeholder='search'>
+      <button type="button" onclick="doSearch()">Search</button>
+      <textarea rows="10" cols="50" id="res" value=" "></textarea>
       
-
+    <script type="module">
+      var inputField;
+      var searchMsg = " ";
+      
+      import algoliasearch from 'https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js';
+      
+      var client = algoliasearch('C8N0R0PBN4', 'cff98d585818a33b504bd2f94cc4fea1');
+      var index = client.initIndex('expertise');
+      
+      var searchResults = document.getElementById('res');
+      searchResults.value = '';
+      
+      inputField = document.getElementById('searchInput');
+      searchMsg = inputField.value;
+      console.log(searchMsg);
+        
+      index.search('medical').then(({ hits }) => {
+        console.log(hits);
+        for (const j in hits[0].users) {
+          searchResults.value += j + "; ";
+        }
+      });
+      
+      function doSearch() {
+        console.log("test");
+      }
+      
     </script>
-  </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+      
+      <script>
+        /*
+        function doSearch() {
+        inputField = document.getElementById('searchInput');
+        searchMsg = inputField.value;
+        
+        index.search(searchMsg).then(({ hits }) => {
+          console.log(hits);
+          for (const j in hits[0].users) {
+            searchResults.value += j + "; ";
+          }
+        });
+      }
+      */
+      </script>
+    
+        
+       
+    </div>
+    
+    <script type="module">
+      /*
+      import algoliasearch from 'https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.esm.browser.js';
+      
+      const client = algoliasearch('C8N0R0PBN4', 'cff98d585818a33b504bd2f94cc4fea1');
+      const index = client.initIndex('expertise');
+      
+      var searchResults = document.getElementById('res');
+      searchResults.value = 'search result';
+      
+      
+      
+      index.search(searchMsg).then(({ hits }) => {
+        console.log(hits);
+        for (const j in hits[0].users) {
+          searchResults.value += j + "; ";
+        }
+      });
+      */
+    </script>
+  </body>
 </html>
