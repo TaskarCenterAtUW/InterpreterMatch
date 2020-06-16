@@ -51,7 +51,7 @@
         } else {
             // TODO: somehow just disallow this?
             console.log("no user signed in")
-            alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+            // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
         }
     });
     </script>
@@ -203,7 +203,7 @@
                                     }
                                 } else {
                                     // TODO: What should we put here if no user is signed in?
-                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                    // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
                                 }
                                 });
                             </script>
@@ -219,7 +219,7 @@
                                     document.getElementById('email-form').value = user.email
                                 } else {
                                     // TODO: What should we put here if no user is signed in?
-                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                    // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
                                 }
                                 });
                             </script>
@@ -326,7 +326,7 @@
                                     })
                                 } else {
                                     // TODO: What should we put here if no user is signed in?
-                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                    // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
                                 }
                                 });
                             </script>
@@ -346,7 +346,7 @@
                                     })
                                 } else {
                                     // TODO: What should we put here if no user is signed in?
-                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
+                                    // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN (user.email)')
                                 }
                                 });
                             </script>
@@ -366,7 +366,7 @@
                                     })
                                 } else {
                                     // TODO: What should we put here if no user is signed in?
-                                    alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN')
+                                    // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN')
                                 }
                                 })
                             </script>
@@ -514,7 +514,7 @@
                 // }
             })
         } else {
-            alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN')
+            // alert('SHOULD NOT BE ABLE TO VIEW PROFILE PAGE WITHOUT BEING SIGNED IN')
         }
         });
     }
@@ -558,9 +558,9 @@
 
     function logout() {
         if (firebase.auth().currentUser) {
-            window.location.href = './index.html';
             firebase.auth().signOut();
             alert("You've been successfully logged out!");
+            window.location.href = './index.html';
             console.log('signed out.');
         } else {
             alert("You must log in first!");
